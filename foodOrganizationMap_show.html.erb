@@ -1,0 +1,39 @@
+<style>
+body{
+	height:95%;
+}
+</style>
+<div>
+
+<h1 style="padding-left:10px;color:#006e54;"><%= @food_organization.Name %></h1>
+<div class="description" style="padding-left:10px;padding-bottom:10px;width:75%">
+<span class="lbl">Address: </span><%= @food_organization.attributes['ShippingStreet'] %> <br/>
+<span class="lbl">City: </span><%= @food_organization.ShippingCity %> <br/>
+<span class="lbl">State: </span><%= @food_organization.ShippingState %> <br/>
+<span class="lbl">Phone: </span><%= @food_organization.Phone %> <br/>
+<span class="lbl"> Requirements: </span><% @food_organization.Requirements__c.each do |r| %>
+	<%= r %> ,
+<% end %> <br/>
+<span class="lbl"> Website: </span><a href="<%= @food_organization.Website %>"><%= @food_organization.Website %></a> <br/>
+<!-- <% @hours %> -->
+</div>
+<hr style="margin:0;"/>
+<div id="frame" style="margin:auto;width:100%;overflow:hidden;background-color:#e8e8e8;">
+
+<% unless @food_organization.attributes['Website'].nil? %>
+<% if @food_organization.Website.include? "http"
+	site = @food_organization.Website
+else 
+	site = "http://#{@food_organization.Website}"
+end %>
+	<iframe frameborder="0" seamless allowTransparency="true" src="<%= site %>" style='width:inherit;height:inherit;border:0;'></iframe>
+	
+
+	<% end %>
+			<script>
+		$f = $('#frame');
+		$f.height($(window).height() -$f.position().top -5);
+		
+		</script>
+</div>
+</div>

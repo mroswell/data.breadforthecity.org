@@ -1,0 +1,597 @@
+<body class="satisfaction">
+<div id="title">
+  <h2 class="top">Bread for the City 2013</h2>
+  <h1 class="top top2">Client Satisfaction Survey Results</h1>
+</div>
+
+<div id="menu">
+<script>
+var startpo,
+lp,
+loff;
+
+jQuery(document).ready(function($){
+
+
+var head = $("table.header");
+
+$('li').click(function(){
+  var topPosition = $($(this).attr('href')).offset().top;
+  //topPosition = topPosition - $('#title').height();
+  $('html,body').animate({scrollTop:topPosition},'slow');
+  return false;
+});
+
+$('a.asect').click(function(){
+  var topPosition = $($(this).attr('href')).offset().top;
+  //topPosition = topPosition - $('#title').height();
+  $('html,body').animate({scrollTop:topPosition},'slow');
+  return false;
+});
+
+$(window).resize(function(){
+  head.css({'position':'relative', 'left':0});
+  lp = head.offset().left;
+  if ($(window).scrollTop() > startpo) head.css({'position': 'fixed', 'top': '0','left': lp-$(document).scrollLeft() 
+      }); 
+
+
+
+});
+
+
+$(document).scroll(function(e) {
+    $('#menu').css({
+        'left': -$(document).scrollLeft()
+    });
+
+        
+        if(startpo == undefined){ 
+          startpo = head.position().top;
+          lp = head.offset().left ;
+     
+        }
+       
+    if ($(window).scrollTop() > startpo) { 
+
+
+      var l = lp-$(document).scrollLeft();
+      
+        head.css({'position': 'fixed', 'top': '0','left': l 
+      }); 
+    }
+    else {
+
+        head.css({'position':'relative', 'left':0})
+    }
+
+});
+
+
+
+
+});
+</script>
+
+<ul class="main_list">
+  <li class="main dropdown" href="#title">Introduction</li>
+    <ul class="introduction">
+      <li href="#idea">the Idea</li>
+      <li href="#team">the Team</li>
+      <li href="#devo">Development</li>
+      <li href="#survey_questions">the Questions</li>
+  <li href="#implement">Implementation</li>
+  <li href="#analysis">Analysis</li>
+  </ul>
+    <li class="main" href="#results">Quantative Results</li>
+    <li class="main" href="#free_response">Free-Response Results</li>
+    <li class="main" href="#demo">Demographics</li>
+  </ul>
+
+
+</div>
+
+<div id="content">
+<div id="intro" class="section">
+  <h3 id="how">How Did We Get Here?</h3>
+  <p><span class="emph" id="idea">An informal culture of feedback</span> exists at Bread for the City. Clients give feedback directly to staff all the time, and that informs programming in a real way. But it doesn’t always get captured in a way that can be aggregated, shared, and viewed across time. Bread for the City has intermittently done client surveying in the past - suggestion boxes and targeted surveys (i.e. satisfaction with the food in the pantry, ease of the navigating BFC’s phone system, what should client engagement look like...). There is a somewhat more consistent history of doing patient satisfaction surveys in the medical clinic, but that too has been spotty through the years. Somewhere around November 2011, staff from different programs (Wendy Guyton - Social NW, Julia Eddy - Medical NW, Melissa Palms - Social SE, and Joni Podschun - Advocacy SE) started having conversations about a common survey tool across all of Bread for the City’s programs and centers. The management team was also talking about systems for client feedback around the same time, and George and Jeannine gave praise to the group that was organically forming to create a survey.  </p>
+
+  <p><span class="emph" id="team">So a zealous team was formed!</span> People came and went but the following staff and volunteers contributed: Melissa Palms, Sherita Evans, Julia Eddy, Wendy Guyton, Joni Podschun, Kathleen Stephan, Lauren Lowenstein, Zachari Curtis, Judy Hawkins, Jeannine Sanford, Melissa Frazier, Lynda Brown, and Sandra Edwards. A former intake volunteer with professional experience in evaluation methods, Laura Golberg, consulted on the project. </p>
+
+  <p>Many months and deliberations about survey questions later, we had a survey with questions focused around the themes of general satisfaction, quality of service/staff treatment, access to and outcomes of service at Bread for the City. A copy of the English version of the survey can be found <a href='https://docs.google.com/a/breadforthecity.org/file/d/0B0kJ2UoxRSenbEZUNmpiVEI2N1E/edit'>here</a>.</p>
+
+  <p><span class="emph" id="devo">The survey development phase</span> of the project was arduous, and many questions surfaced, some still unanswered: should we use a tool that others have used or make our own? What will happen with the data? Are all of the questions actionable? Is it important to ask about access, when we know that our services are confined by resources? Should we bring in outside volunteers to administer the survey? Does it matter who the volunteers administering the survey are and what they look like? Will folks provide more honest feedback on the phone or in person? What will really happen with this data? Where will it live? How do we make sure it doesn’t just fall into a black hole? What will surveying look like in the future? Who owns/manages this project? The team resigned to not answering all of these questions, we assumed that we would make mistakes and we hoped this could be an experience from which to learn and improve the questions and the process.</p>
+
+  <p><span class="emph" id="survey_questions">The survey was comprised of 15 questions</span> - 12 questions (A thru L), which were answered on a 5 point scale – 1 (strongly disagree), 2 (disagree), 3 (neutral), 4 (agree), 5 (strong agree). Question M was a “Yes” or “No” question about staff behaving unethically. And questions N and O were free-response about barriers clients may have experienced in obtaining services and about new things they would like to see at BFC. The survey also asked for people to identify their demographics and which BFC services they had participated in.</p>
+
+  <p><span class="emph" id="implement">For survey implementation and data entry</span>, the committee called upon the Volunteer Coordinators in both BFC centers to recruit volunteers from Bread for the City’s current volunteer pool to administer the survey both in-person in BFC’s lobbies and over the phone.  Those volunteers went through an initial training which covered what the questions mean on the survey, good surveying etiquette and how to note comments and follow ups.  Paper surveys, in English and Spanish, were also available in the lobbies of both Centers for clients to take the survey on their own time. We also had one bilingual volunteer who administered the survey in Spanish. Volunteers were instructed to approach everyone and identify themselves as a volunteer. All surveys were anonymous. Volunteers were scheduled to administer the survey for 2-4 weeks in each center and a staff member was always available to support them. </p>
+
+  <p>In total, we collected 356 surveys- 127 in Southeast, 213 in Northwest. In NW, at least 109 were completed with the assistance of a volunteer in a lobby or private room and 36 were completed over the phone. In SE, at least 21 were completed in the lobby or a private room and 18 were completed over the phone. It is likely that more surveys were completed with volunteers, and it was simply not indicated in the administrator survey box. </p>
+
+  <p><span class="emph" id="analysis">Data Analysis</span> was done by Bread’s Data Analyst and Quality Improvement Manager, Julia Eddy. We processed the data to create graphs and compare the demographics distribution to regular client statistics. The <a href='#results' class='asect'>Quantative Results Section</a> shows Questions A-M spliced out by program based on the services clients identified at the end of the survey and the center in which the survey was completed (i.e. someone who checked Food and Legal and filled out a survey in Southeast, is counted in the SE Total chart, the Legal chart and the Food chart). </p>
+
+  <p>The <a href='#free_response' class='asect'>Free Response Results Section</a> contains a summary of the free-response questions and comments from the survey. All free responses were coded for themes and organized into word clouds, which can broadly be thought of as themes, issue areas, and jumping off points for improvement. Examples of coding are as follows: </p>
+
+  <blockquote>
+  <p>Comments “make services with limited or no access to tokens”, “”transportation to and from client residences” or just “transportation” were all were coded as “Transportation”. Comments about “In-home Services” were coded separately.</p>
+
+  <p>Comments “not enough food for 1) complete meals;2) three days” or “supply more food - weekly instead of monthly” those were coded as “MoreFood”. Anything more specific, like “More fruits and veggies”, was coded separately. </p>
+
+  <p>The comment “another building in another location of the city one in SW & NE…I wasn't aware of the SE center” was coded as “MoreLocations” and “Outreach.”</p>
+
+  <p>Comments such as “advertise your services more so more people can get help” and “services may be here that I don't know about or if new services are added I won't know” were both coded as “Outreach”.</p>
+
+  <p>A general category “More” was created to emphasize comments that indicated unmet needs or a general desire for Bread for the City to do more. </p>
+  </blockquote>
+
+  <p>Comments related to how great Bread is were so prevalent that they were not included in the final word clouds, but it should be noted that Bread appeared very loved in the written remarks. </p>
+
+  <p>Aside from the general category of wanting/needing More from Bread, the most frequent themes to show up in the word clouds were for help with Transportation (17 times), Housing (appeared 15 times), a Clothing Rom in NW (11 times), More Food each month (10 times), More Space in Southeast (9 times), and Extended hours (8 times), and Parking in both centers (7 times). </p>
+
+  <p>A messy list of raw comments for each center and codes assigned can also be found <a href="https://docs.google.com/spreadsheet/ccc?key=0AkkJ2UoxRSendFd3RVZZY1RCYV9ObV9rTFVISDV0NkE#gid=0">here</a>.</p>  
+</div>
+
+<div id="data" class="section">
+<h3 id="results" >Quantative Results</h3>
+<p class="explain">below, select which program and/or center you would like to view results for</p>
+
+<table id="selectors">
+  <tr><td>Program:</td><td>Center:</td></tr>
+  <tr>
+    <td class="sel">
+  <select id="program">
+    <option value="All">All</option>
+    <option value="Food">Food</option>
+    <option value="Medical">Medical</option>
+    <option value="Social">Social</option>
+    <option value="Legal">Legal</option>
+    <option value="Clothing">Clothing</option>
+    <option value="RPP">RPP</option>
+  </select>
+</td>
+<td class="sel">
+  <select id="center">
+    <option value="All">Both</option>
+    <option value="NW">NW</option>
+    <option value="SE">SE</option>
+</select>
+</td> </tr></table>
+<p class="charttip">#this program is only offered at one center</p>
+
+<table id="key"><tr><td id="neg">Disagree</td><td id="neut">Neutral </td><td id="posi">  Agree </td></tr></table>
+
+<div id="chart">
+ <% if browser.ie8? %>
+<p class='warning'><span>SHOOT!</span> looks like you're using an old version of Internet Explorer (<img src='http://www.oit.umass.edu/sites/oit.umass.edu/files/styles/software_icon_mini/public/2010/06/14/Internet_Explorer_7_Logo.png?itok=AmKPSs_D' style='display:inline;position:relative;top:5px;'/>) to browse the internet. This chart is not compatible with your browser. <br/><span>Have you tried</span> Google Chrome or Firefox? <br/> find either of these icons on your desktop:
+</p>
+
+<a href='http://google.com/chrome'> <img src='http://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Google_Chrome_icon_%282011%29.svg/64px-Google_Chrome_icon_%282011%29.svg.png' /></a>
+<a href='http://firefox.com'> <img src='http://www.toodledo.com/images/icons/firefox_icon64.png' /></a>
+
+<p> <a href="http://whatbrowser.org"> What is a browser? </a> </p> 
+<% end %>
+
+ 
+</div>
+</div>
+
+<div id="end" class="section">
+<h3 id="free_response">Free Response Results</h3>
+
+<p>The following word clouds represent themes that emerged in the comments after each question and the two free response questions on the survey:<p>
+
+  <blockquote><p>N. Has anything ever made it difficult for you get Bread services? If so, what was it? 
+O. If there were one thing you would like to see happen at Bread for the City that is not already happening, what would it be?</p>
+</blockquote>
+
+<p>Broadly these themes point to potential jumping off points for further exploration into areas of improvement.<br/>
+A full list of the comments and the coding for the word clouds can be found <a href="https://docs.google.com/spreadsheet/ccc?key=0AkkJ2UoxRSendFd3RVZZY1RCYV9ObV9rTFVISDV0NkE#gid=0">here</a>. </p>
+
+<h4>Northwest:</h4>
+<%= image_tag("NWwordcloud.jpg" , :class => "cloud") %>
+<h4>Southeast:</h4>
+<%= image_tag("SEwordcloud.jpg", :class => "cloud") %>
+
+</div>
+
+<div class="section">
+  <h3 id="demo">Demographic Data</h3>
+
+  <p>Who responded to the survey? And how do they match up with Bread's general client base?</p>
+
+<table class="tdata header">
+  <tr>
+  <td class="label"></td><td class="hone">survey#</td><td class="htwo">survey%</td><td class="hlast">bread%</td>
+</tr>
+</table>
+
+
+<table class="tdata">
+
+<tr class="lbl">
+  <td class="label">Race</td><td class="empt"></td><td class="empt"></td><td class="empt"></td>
+</tr>
+<tr>
+  <td class="rowname">Black/African-American</td><td>265</td><td>74.65%</td><td class="lastcl">86.28%</td>
+</tr>
+<tr>
+  <td class="rowname">Identified by Nationality/Region</td><td>20</td><td>5.63%</td><td class="lastcl">--</td>
+</tr>
+</tr>
+<tr>
+  <td class="rowname">Mixed/Multiple Nationalities</td><td>12</td><td>3.38%</td><td class="lastcl">--</td>
+</tr>
+</tr>
+<tr>
+  <td class="rowname">Hispanic/Latino</td><td>11</td><td>3.10%</td><td class="lastcl">5.23%</td>
+</tr>
+</tr>
+<tr>
+  <td class="rowname">White</td><td>10</td><td>2.82%</td><td class="lastcl">2.55%</td>
+</tr>
+</tr>
+<tr>
+  <td class="rowname">'Other'</td><td>2</td><td>0.56%</td><td class="lastcl">3.07%</td>
+</tr>
+</tr>
+<tr>
+  <td class="rowname">Asian</td><td>1</td><td>0.28%</td><td class="lastcl">1.02%</td>
+</tr>
+</tr>
+<tr>
+  <td class="rowname">Native American</td><td>1</td><td>0.28%</td><td class="lastcl">0.16%</td>
+</tr>
+</tr>
+<tr>
+  <td class="rowname">Did Not Identify</td><td>33</td><td>9.30%</td><td class="lastcl">1.69%</td>
+</tr>
+</table>
+
+<table class="tdata">
+  <tr class="lbl">
+  <td class="label">Gender</td><td class="empt"></td><td class="empt"></td><td class="empt"></td>
+</tr>
+<tr>
+  <td class="rowname">Male</td><td>127</td><td>35.77%</td><td class="lastcl">39.54%</td>
+</tr>
+<tr>
+  <td class="rowname">Female</td><td>187</td><td>52.68%</td><td class="lastcl">60.23%</td>
+</tr>
+<tr>
+  <td class="rowname">Transgender</td><td>0</td><td>0%</td><td class="lastcl">0.05%</td>
+</tr>
+<tr>
+  <td class="rowname">(blank)</td><td>41</td><td>11.55%</td><td class="lastcl">0.18%</td>
+</tr>
+
+</table>
+
+<table class="tdata">
+    <tr class="lbl">
+  <td class="label">Age</td><td class="empt"></td><td class="empt"></td><td class="empt"></td>
+</tr>
+<tr>
+  <td class="rowname">&lt;18</td><td>1</td><td>0.28%</td><td class="<lastcl">2.31%</td>
+</tr>
+<tr>
+  <td class="rowname">18-30</td><td>43</td><td>12.11%</td><td class="lastcl">13.67%</td>
+</tr>
+<tr>
+  <td class="rowname">31-60</td><td>195</td><td>54.93%</td><td class="lastcl">61.92%</td>
+</tr>
+<tr>
+  <td class="rowname">60+</td><td>87</td><td>24.51%</td><td class="lastcl">22.06%</td>
+</tr>
+<tr>
+  <td class="rowname">(blank)</td><td>29</td><td>8.17%</td><td class="lastcl">0.05%</td>
+</tr>
+
+</table>
+
+<table class="tdata">
+    <tr class="lbl">
+  <td class="label">Language</td><td class="empt"></td><td class="empt"></td><td class="empt"></td>
+</tr>
+<tr>
+  <td class="rowname">English</td><td>291</td><td>81.97%</td><td class="lastcl">84.81%</td>
+</tr>
+<tr>
+  <td class="rowname">Other+English</td><td>10</td><td>2.82%</td><td class="lastcl">--</td>
+</tr>
+<tr>
+  <td class="rowname">Spanish</td><td>8</td><td>2.25%</td><td class="lastcl">4.43%</td>
+</tr>
+<tr>
+  <td class="rowname">Other</td><td>7</td><td>1.97%</td><td class="lastcl">1.37%</td>
+</tr>
+<tr>
+  <td class="rowname">English+Spanish</td><td>6</td><td>1.69%</td><td class="lastcl">--</td>
+</tr>
+<tr>
+  <td class="rowname">Amharic</td><td>1</td><td>0.28%</td><td class="lastcl">8.52%</td>
+</tr>
+<tr>
+  <td class="rowname">(blank)</td><td>32</td><td>9.01%</td><td class="lastcl">8.52%</td>
+</tr>
+
+</table>
+
+
+<table class="tdata">
+    <tr class="lbl">
+  <td class="label">Department</td><td class="empt"></td><td class="empt"></td>
+</tr>
+<tr>
+  <td class="rowname">Food</td><td>237</td><td>66.76%</td>
+</tr>
+<tr>
+  <td class="rowname">Clothing</td><td>120</td><td>33.80%</td>
+</tr>
+<tr>
+  <td class="rowname">Social</td><td>115</td><td>32.39%</td>
+</tr>
+<tr>
+  <td class="rowname">Legal</td><td>108</td><td>30.42%</td>
+</tr>
+<tr>
+  <td class="rowname">Medical</td><td>98</td><td>27.61%</td>
+</tr>
+<tr>
+  <td class="rowname">RPP</td><td>28</td><td>7.89%</td>
+</tr>
+
+
+</table>
+
+<table class="tdata">
+    <tr class="lbl">
+  <td class="label">Center</td><td class="empt"></td><td class="empt"></td>
+</tr>
+<tr>
+  <td class="rowname">NW</td><td>212</td><td>59.72%</td>
+</tr>
+<tr>
+  <td class="rowname">SE</td><td>127</td><td>35.77%</td>
+</tr>
+<tr>
+  <td class="rowname">(blank)</td><td>16</td><td>4.51%</td>
+</tr>
+</table>
+
+
+
+
+
+</div>
+
+
+<script>
+
+var prog = document.getElementById("program").value,
+cent = document.getElementById("center").value,
+data = [],
+questKey = {'A': 'A. I am treated with respect', 'B':'B. I would recommend BFC',
+            'C':'C. Staff do what they say they will do', 'D': 'D. People here care about me',
+            'E':'E. BFC has made a difference in my life','F':'F. Staff listen to me', 
+            'G':'G. Staff understand and respect my culture', 'H':'H. I understand what I am told by staff',
+            'I':'I. My privacy and confidentiality are respected','J':'J. Staff shows a high level of knowledge/experience',
+            'K':'K. BFC provides services my community needs','L':'L. I receive the education/support I need'};
+
+var margin = {top: 20, right: 75, bottom: 30, left: 40},
+  width = 750 - margin.left - margin.right,
+  height = 550 - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal()
+  .rangeRoundBands([0,width],.1);
+
+var y = d3.scale.linear()
+  .rangeRound([height,0]);
+
+var color = d3.scale.ordinal()
+  .range(["#7A1213", "#7A1213", "#DD3B3B", "#aeb5a5", "#aeb5a5"]);
+
+var xAxis = d3.svg.axis()
+  .scale(x)
+  .orient("bottom");
+
+var yAxis = d3.svg.axis()
+  .scale(y)
+  .orient("left")
+  .tickFormat(d3.format(".0%"));
+
+var svg = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right + 50)
+    .attr("height", height + margin.top + margin.bottom + 200)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var question = svg.selectAll(".question");
+var labelOne,
+labelThree,
+labelFive;
+
+
+data = filterdata();
+
+//console.log(data);
+
+
+ svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+ d3.selectAll(".x .tick text")
+   .attr('dx',10)
+    //.attr('dy',70)
+    .attr('font-size',12)
+    .attr('transform','rotate(45)')
+    .style('text-anchor','start');
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+
+  
+ question = question.data(data)
+    .enter().append("g")
+      .attr("class", "question")
+      .attr("id",function(d){return d.Question;})
+      .attr("transform", function(d) { return "translate(" + x(d.Question) + ",0)" ; });
+
+  question.selectAll("rect")
+      .data(function(d) { return d.rating; })
+      .enter().append("rect")
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.y1); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+      .attr("class",function(d){ return d.name;})
+      .style("fill", function(d) { return color(d.name); });
+
+ labelOne = question.append('svg:text')
+ .attr('y', function(d){return y(d.rating[0].y0)})
+ .attr('dy',function(d){return 2+(y(d.rating[1].y1) - y(d.rating[0].y0))/2})
+ .attr('dx',x.rangeBand()/2-8)
+ .attr('class','one')
+  .text(function(d){return Math.round((d.groupings['1-2']/d.groupings.Total)*100) + '%';})
+  .style('fill','white');
+
+labelThree = question.append('svg:text')
+  .attr('y', function(d){ return y(d.rating[2].y0); })
+  .attr('dy',function(d){return 2+(y(d.rating[2].y1)-y(d.rating[2].y0))/2})
+  .attr('dx',x.rangeBand()/2-8)
+  .attr('class','five')
+    .text(function(d){ return Math.round((d.groupings['3']/d.groupings.Total)*100)+'%';})
+    .style('fill','white');
+
+labelFive = question.append('svg:text')
+  .attr('y', function(d){ return y(d.rating[3].y0); })
+  .attr('dy',function(d){return 2+(y(d.rating[4].y1)-y(d.rating[3].y0))/2})
+  .attr('dx',x.rangeBand()/2-10)
+  .attr('class','three')
+    .text(function(d){ return Math.round((d.groupings['4-5']/d.groupings.Total)*100)+'%';})
+    .style('fill','white');
+  
+
+
+d3.selectAll("select").on("change",update);
+
+
+//defined functions
+function filterdata(){
+
+//if(dat === undefined){ console.log(dat);}else{
+  var dat;
+
+
+  dat = satisfied13.filter(function(d){
+   
+
+    if(d.Center ==  cent && d.Program == prog){
+ 
+      return d;
+    
+    }
+
+  });
+
+  x.domain(dat.map(function(d) { return questKey[d.Question]; }));
+
+  color.domain(d3.keys(dat[0]).filter(function(key){ 
+
+    if( key.length == 1 ) return key;
+
+  }));  
+
+
+  dat.forEach(function(d){
+    var y0 = 0;
+    
+    d.rating = color.domain().map(function(name){ //for each rating in a given row add an array of objects to that row with bottom height and top height for each rating
+      
+      return {name: name, y0: y0, y1: y0 += +d[name]};
+  
+  });
+
+  d.rating.forEach(function(d){ d.y0 /= y0; d.y1 /= y0;});
+
+  d.groupings = {'1-2':parseInt(d[1])+parseInt(d[2]), '3': parseInt(d[3]), '4-5':parseInt(d[4]) + parseInt(d[5]), 
+                'Total':parseInt(d[1])+parseInt(d[2])+parseInt(d[3])+parseInt(d[4])+parseInt(d[5])};
+ 
+});
+
+return dat;
+//}
+
+};
+
+ 
+ function update(){
+
+  prog = document.getElementById("program").value;
+  cent = document.getElementById("center").value;
+
+
+  if(prog == 'Medical' || prog == 'RPP' || prog == 'Clothing') {
+
+    cent = 'All';
+    $('.charttip').css('display','inline');
+    //document.getElementById("center").value = 'All';
+
+  } else {$('.charttip').hide();}
+//console.log(data);
+  data = filterdata();
+ //console.log(data);
+  question.data(data).selectAll("rect")
+    .data(function(d){return d.rating;}).transition()
+    .duration(750)
+    .attr("y", function(d) { return y(d.y1); })
+    .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+    .attr('stroke','none');
+
+labelOne.data(data)
+  .transition()
+  .duration(750)
+   .attr('y', function(d){return y(d.rating[0].y0)})
+ .attr('dy',function(d){return 2+(y(d.rating[1].y1) - y(d.rating[0].y0))/2})
+ .text(function(d){ 
+    var per = Math.round((d.groupings['1-2']/d.groupings.Total)*100);
+    if(per > 0){
+    return  per + '%';
+  } else {return '';}
+  });
+
+ labelThree.data(data)
+  .transition()
+  .duration(750)
+   .attr('y', function(d){return y(d.rating[2].y0)})
+ .attr('dy',function(d){return 2+(y(d.rating[2].y1) - y(d.rating[2].y0))/2})
+ .text(function(d){ 
+    var per = Math.round((d.groupings['3']/d.groupings.Total)*100);
+    if(per>0){
+      return per + '%';
+    } else {return '';}
+});
+
+
+  labelFive.data(data)
+  .transition()
+  .duration(750)
+   .attr('y', function(d){return y(d.rating[3].y0)})
+ .attr('dy',function(d){return 2+(y(d.rating[4].y1) - y(d.rating[3].y0))/2})
+ .text(function(d){ 
+    var per = Math.round((d.groupings['4-5']/d.groupings.Total)*100);
+    if(per>0){
+      return per + '%';
+    } else {return '';}
+});
+
+
+
+
+
+};
+
+
+</script>
+</body>

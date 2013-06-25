@@ -1,0 +1,164 @@
+<div id="sidebar"><div class="header">
+<h1><span id='number'><%= @food_organizations.count %></span> Food Orgs</h1>
+</div>
+
+<div id="orgs">
+	<% @food_organizations.each do |o| %>
+	<% if o.Requirements__c.include? 'Referral'
+		req = 'required'
+	else
+		req = 'notrequired'
+		end %>
+
+
+	<div class="org <%= req %>" id="<%=o.Id%>">
+		<%= link_to "#{o.Name}", o.Id, :class => "primlink #{req}" %><br/>
+	</div>
+<% end %>
+</div>
+</div>
+
+
+<div id='map-ui'>
+	<ul>
+		<li><a href='#' id='require'>Require Referrals</a></li>
+		<li><a href='#' id='noref'>No Referrals</a></li>
+	<ul>
+
+
+</div>
+
+
+<div id='map'></div>
+
+
+<script>
+$(document).ready(function(){
+
+	food_data = <%=raw @food_organizations.to_json %>,
+	norefFood = filterLayer('noref'),
+	reqFilter = filterLayer('req'),
+	baseMap = 'lomaxrx.map-9za9bkp7',
+	map = L.mapbox.map('map', baseMap, {minZoom:10, maxBounds: [[38.61,-77.5],[39.23, -76.6]]}),
+	bound = new L.LatLngBounds();
+
+	map.setView({lat: 38.900,lon: -77.03},12);
+ 
+	var ico = L.icon({
+		iconUrl: '<%= asset_path "grocery.png" %>'
+	}),
+	everyLayer = defineLayer(food_data),
+	norefLayer = defineLayer(norefFood),
+	reqLayer = defineLayer(reqFilter);
+
+	everyLayer.addTo(map);
+
+	$('a#noref').click(function(){
+		var t = $(this),
+		$oppLinks = $('div.required'),
+		$links = $('div.notrequired');
+		o = $('a#require');
+
+		t.toggleClass('active');
+		$('span#number').html($links.length);
+
+		if(o.hasClass('active')){
+			o.toggleClass('active');
+			map.removeLayer(reqLayer);
+			$links.toggle('slide');
+		}
+
+		if(t.hasClass('active')){
+	
+			map.removeLayer(everyLayer);
+			map.addLayer(norefLayer);
+			$oppLinks.toggle('slide');
+	
+		} else {
+		
+			map.removeLayer(norefLayer)
+			map.addLayer(everyLayer);
+			$oppLinks.toggle('slide');
+			
+			$('span#number').html(<%= @food_organizations.count %>);
+		}
+	});
+
+	$('a#require').click(function(){
+		var t = $(this),
+		o = $('a#noref'),
+		$links = $('div.required')
+		$oppLinks = $('div.notrequired');
+		
+		t.toggleClass('active');
+		$('span#number').html($links.length);
+
+		if(o.hasClass('active')){ 
+
+			o.toggleClass('active');
+			map.removeLayer(norefLayer);
+			$links.toggle('slide');
+			
+		}
+		if($(this).hasClass('active')){
+	
+			map.removeLayer(everyLayer);
+			map.addLayer(reqLayer);
+			$oppLinks.toggle('slide');
+
+	
+		} else {
+		
+			map.removeLayer(reqLayer)
+			map.addLayer(everyLayer);
+		
+			$oppLinks.toggle('slide');
+			$('span#number').html(<%= @food_organizations.count %>);
+		}
+
+	});
+
+
+	function filterLayer(f){
+
+		var ff;
+
+		if(f == 'noref'){
+
+			ff = food_data.filter(function(fo){
+				return $.inArray('Referral',fo.Requirements__c) == -1;
+			});
+		} else if (f == "req"){
+			ff = food_data.filter(function(fo){
+				return $.inArray('Referral',fo.Requirements__c) != -1;
+			});
+		}
+
+		return ff;
+	
+}
+
+	function defineLayer(f){
+
+		var mLayer,
+		layer = [];
+
+		for(var i=0; i<f.length; i++){
+	
+			var foo = f[i];
+	
+			mark = L.marker([foo.geoLocation__Latitude__s, foo.geoLocation__Longitude__s],{icon : ico});
+			mark.bindPopup("Name: " + foo.Name + "<br/>Address: " + 
+				foo.ShippingStreet + "<br/>Requirements: " +
+				foo.Requirements__c).openPopup();
+			mark.data = foo;
+
+			layer.push(mark);    
+		}
+
+		mLayer = L.featureGroup(layer);
+		return mLayer;
+	}
+
+});
+</script>

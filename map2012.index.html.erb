@@ -1,0 +1,518 @@
+<body class="map">
+
+<div id='app'>
+  
+  <div id='databar'>
+    <p id='nbh'>NEIGHBORHOOD</p>
+    <p id='hood_title'></p>
+
+    
+  <hr class='top' />
+  <div id='program-list-wrapper'>
+      
+    <ul id='programs-list'>
+      <li id='0' class='program selected'>all</li>
+      <li id='1' class='program'>medical</li>
+      <li id='2' class='program'>social services</li>
+      <li id='4' class='program'>legal</li>
+    </ul>
+
+  </div>
+    
+  <div id='bread_data'>
+
+    <div id='services_breakdown'>
+      <svg id='breakdown'></svg>
+    </div>
+
+  </div> 
+  <div id='bottom-data'>
+ 
+    <hr class='bottom' />
+    <div id='access_data'>
+
+      <table id='pop_comparison'>
+        <tr>
+          <th class="rowname"></th>
+          <th id="general">Neighborhood</th>
+          <th class='rightcell' id="client">Client</th>
+        </tr>
+        <tr id='pop'>
+          <td class="rowname">Population</td>
+          <td id='gen_pop'></td>
+          <td class='rightcell' id='client_pop'></td>
+        </tr>
+        <tr id='income'>
+          <td class="rowname">Average Income /year</td>
+          <td id='gen_inc'></td>
+          <td class='rightcell' id='client_inc'></td>
+        </tr>
+        <tr id='grocer_dist'>
+          <td class="rowname">Average Walk Time to Grocery</td>
+          <td id='gen_dist'></td>
+          <td class='rightcell' id='client_dist'></td>
+        </tr>
+      </table>
+    
+    </div>
+  </div>
+  </div>
+    <div id='map-container'>
+    <div id='map'></div>
+  </div>
+
+
+
+
+	
+
+<script type="text/javascript">
+
+
+
+var w = 400,
+h = 300,
+r = 100,
+ir = 45,
+textOffset = 14,
+tweenDuration = 1000,
+total,
+lines,
+valueLabels,
+nameLabels,
+paths,
+doPaths;
+
+var donut = d3.layout.pie().value(function(d){ return d.value; });
+var arc = d3.svg.arc()
+  .startAngle(function(d){ return d.startAngle; })
+  .endAngle(function(d){ return d.endAngle; })
+  .innerRadius(ir)
+  .outerRadius(r);
+var vis = d3.select('#breakdown')
+  .attr('width',w)
+  .attr('height',h);
+var arc_group = vis.append('svg:g')
+  .attr('class','arc')
+  .attr("transform", "translate(" + (w/2) + "," + (h/2) + ")");
+var label_group = vis.append('svg:g')
+  .attr('class','label-group')
+  .attr('transform','translate(' + (w/2) + ',' + (h/2) + ')');
+var center_group = vis.append('svg:g')
+  .attr('class','center')
+  .attr("transform", "translate(" + (w/2) + "," + (h/2) + ")");
+var totalValue = center_group.append('svg:text')
+  .attr('class','totalValue')
+  .attr('dy',7)
+  .attr('text-anchor','middle');
+var totalLabel = center_group.append('svg:text')
+  .attr('class', 'totaLabel')
+  .attr('dy',-15)
+  .attr('text-anchor','middle')
+  .text('TOTAL')
+  .style('font-weight','bolder')
+  .style('font-size','10px');
+var totalUnits = center_group.append('svg:text')
+  .attr('class','units')
+  .attr('dy',21)
+  .attr('text-anchor','middle')
+  .text('visits');
+
+var totalIt = function(array){ 
+  total = 0;
+  for(i=0;i<array.length;i++){ total += array[i].value; }
+}
+
+var filterIt = function(element, index, array){
+
+  element.per = (element.value/total)*100;
+  return (element.per > 0.8);
+
+}
+
+
+var pieCharted = function(data,sel){
+
+  totalIt(data);
+  oldData = pieData
+  pieData = donut(data).filter(filterIt);
+
+  totalValue.text(addCommas(total))
+    .style('font-size','16px')
+    .style('font-weight','bold');
+
+
+  if(sel==4) {
+    totalUnits.text('issues');
+  } else { totalUnits.text('visits');}
+
+    paths = arc_group.selectAll('path').data(pieData);
+    doPaths = paths.enter().append('svg:path')
+      .attr('stroke','white')
+      .attr('stroke-width',0.5)
+      .attr('fill', function(d){ return d.data.color; });
+      
+    if(oldData == null) doPaths.attr('d',arc);
+
+    lines = label_group.selectAll('line').data(pieData);
+    lines.enter().append('svg:line')
+      .attr('x1', 0)
+      .attr('x2',0)
+      .attr('y1',-r-3)
+      .attr('y2',-r-8)
+      .attr('stroke','gray')
+      .attr('transform', function(d){
+        return 'rotate(' + (d.startAngle+d.endAngle)/2 * (180/Math.PI) + ')';
+      });
+
+      valueLabels = label_group.selectAll('text.valueLabels').data(pieData)
+      .attr("dy", function(d){
+        if ((d.startAngle+d.endAngle)/2 > Math.PI/2 && (d.startAngle+d.endAngle)/2 < Math.PI*1.5 ) {
+          return 5;
+        } else {
+          return -7;
+        }
+      })
+      .attr("text-anchor", function(d){
+        if ( (d.startAngle+d.endAngle)/2 < Math.PI ){
+          return "beginning";
+        } else {
+          return "end";
+        }
+      })
+      .text(function(d){
+        var percentage = (d.value/total)*100;
+        return percentage.toFixed(1) + "%";
+      });
+    valueLabels.enter().append("svg:text")
+      .attr('class', 'valueLabels')
+      .attr("transform", function(d) {
+        return "translate(" + Math.cos(((d.startAngle+d.endAngle - Math.PI)/2)) * (r+textOffset) + "," + Math.sin((d.startAngle+d.endAngle - Math.PI)/2) * (r+textOffset) + ")";
+      })
+      .attr("dy", function(d){
+        if ((d.startAngle+d.endAngle)/2 > Math.PI/2 && (d.startAngle+d.endAngle)/2 < Math.PI*1.5 ) {
+          return 5;
+        } else {
+          return -7;
+        }
+      })
+      .attr("text-anchor", function(d){
+        if ( (d.startAngle+d.endAngle)/2 < Math.PI ){
+          return "beginning";
+        } else {
+          return "end";
+        }
+      }).text(function(d){
+        var percentage = (d.value/total)*100;
+        return percentage.toFixed(1) + "%";
+      });
+
+    nameLabels = label_group.selectAll("text.units").data(pieData)
+      .attr("dy", function(d){
+        if ((d.startAngle+d.endAngle)/2 > Math.PI/2 && (d.startAngle+d.endAngle)/2 < Math.PI*1.5 ) {
+          return 17;
+        } else {
+          return 5;
+        }
+      })
+      .attr("text-anchor", function(d){
+        if ((d.startAngle+d.endAngle)/2 < Math.PI ) {
+          return "beginning";
+        } else {
+          return "end";
+        }
+      })
+      .text(function(d){
+        return d.data.label;
+      })
+    nameLabels.enter().append("svg:text")
+      .attr('class', 'units')
+      .attr("transform", function(d) {
+        return "translate(" + Math.cos(((d.startAngle+d.endAngle - Math.PI)/2)) * (r+textOffset) + "," + Math.sin((d.startAngle+d.endAngle - Math.PI)/2) * (r+textOffset) + ")";
+      })
+      .attr("dy", function(d){
+        if ((d.startAngle+d.endAngle)/2 > Math.PI/2 && (d.startAngle+d.endAngle)/2 < Math.PI*1.5 ) {
+          return 17;
+        } else {
+          return 5;
+        }
+      })
+      .attr("text-anchor", function(d){
+        if ((d.startAngle+d.endAngle)/2 < Math.PI ) {
+          return "beginning";
+        } else {
+          return "end";
+        }
+      }).text(function(d){
+        return d.data.label;
+      });
+
+
+    if(oldData != null){
+
+        doPaths.transition()
+          .duration(tweenDuration)
+          .attrTween('d',pieTween)
+          .attr('fill',function(d){ return d.data.color;});
+        paths.transition()
+          .duration(tweenDuration)
+          .attrTween('d',pieTween)
+          .attr('fill',function(d){ return d.data.color;})
+        paths.exit()
+          .transition()
+          .duration(tweenDuration)
+          .attrTween('d',removePieTween)
+          .attr('fill',function(d){ return d.data.color;})
+          .remove();
+
+        lines.transition()
+          .duration(tweenDuration)
+          .attr("transform", function(d) {
+            return "rotate(" + (d.startAngle+d.endAngle)/2 * (180/Math.PI) + ")";
+          });
+        lines.exit().remove();
+
+        valueLabels.transition()
+          .duration(tweenDuration).attrTween("transform", textTween);
+        valueLabels.exit().remove();
+
+        nameLabels.transition()
+          .duration(tweenDuration).attrTween("transform", textTween);
+        nameLabels.exit().remove();
+
+    }
+
+} //end pieCharted function
+
+
+
+
+///////////////////////////////////////////////////////////
+// FUNCTIONS //////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+// Interpolate the arcs in data space.
+function pieTween(d, i) {
+  var s0;
+  var e0;
+  if(oldData[i]){
+    s0 = oldData[i].startAngle;
+    e0 = oldData[i].endAngle;
+  } else if (!(oldData[i]) && oldData[i-1]) {
+    s0 = oldData[i-1].endAngle;
+    e0 = oldData[i-1].endAngle;
+  } else if(!(oldData[i-1]) && oldData.length > 0){
+    s0 = oldData[oldData.length-1].endAngle;
+    e0 = oldData[oldData.length-1].endAngle;
+  } else {
+    s0 = 0;
+    e0 = 0;
+  }
+  var i = d3.interpolate({startAngle: s0, endAngle: e0}, {startAngle: d.startAngle, endAngle: d.endAngle});
+  return function(t) {
+    var b = i(t);
+    return arc(b);
+  };
+}
+
+function removePieTween(d, i) {
+  s0 = 2 * Math.PI;
+  e0 = 2 * Math.PI;
+  var a = d3.interpolate({startAngle: d.startAngle, endAngle: d.endAngle}, {startAngle: s0, endAngle: e0});
+  return function(t) {
+    var b = a(t);
+    return arc(b);
+  };
+}
+
+
+function textTween(d, i) {
+  var a;
+  if(oldData[i]){
+    a = (oldData[i].startAngle + oldData[i].endAngle - Math.PI)/2;
+  } else if (!(oldData[i]) && oldData[i-1]) {
+    a = (oldData[i-1].startAngle + oldData[i-1].endAngle - Math.PI)/2;
+  } else if(!(oldData[i-1]) && oldData.length > 0) {
+    a = (oldData[oldData.length-1].startAngle + oldData[oldData.length-1].endAngle - Math.PI)/2;
+  } else {
+    a = 0;
+  }
+  var b = (d.startAngle + d.endAngle - Math.PI)/2;
+
+  var fn = d3.interpolateNumber(a, b);
+  return function(t) {
+    var val = fn(t);
+    return "translate(" + Math.cos(val) * (r+textOffset) + "," + Math.sin(val) * (r+textOffset) + ")";
+  };
+}
+
+function addCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+</script>
+<script type="text/javascript">
+
+//variable setup
+  var selected = 0,
+  oldData,
+  pieData,
+  breaddata,
+  currentHood = 'Washington, D.C.',
+  baseMap = 'lomaxrx.map-hfq05xwk',
+  layer = 'lomaxrx.BreadThroughDC';
+ // baseURL = 'http://a.tiles.mapbox.com/v3/',
+  //url = baseURL + layer + '.jsonp';
+
+
+ $(document).ready(function(){
+
+  $('#hood_title').text(currentHood);
+
+  pieCharted(mapBase2012); //enter first round of data for pie chart
+  resetData();
+
+  $('li.program').click(function(){
+    
+    $('li.selected').removeClass('selected');
+    $(this).addClass('selected');
+    selected = parseInt($(this).attr('id'));
+
+    if(selected!=0){
+      pieCharted(mapBase2012[selected].detail,selected);
+    } else {
+      pieCharted(mapBase2012,selected);
+    }
+
+  $('#hood_title').text('Washington, D.C.');
+  resetData();
+
+  });//end click function
+
+ }); //end jQuery
+
+ function resetData(){
+  $('td#gen_pop').text('594,479');
+  $('td#client_pop').text('29,905');
+  $('td#gen_inc').text('$55,000');
+  $('td#client_inc').text('$6,816');
+  $('td#gen_dist').text('--');
+  $('td#client_dist').text('16 min'); 
+  }   
+
+
+
+//build map
+  var map = mapbox.map('map');
+
+  map.centerzoom({lat: 38.900,lon: -77.03},12);
+  map.ui.zoomer.add();
+  map.ui.zoombox.add();
+  map.setZoomRange(11,16);
+  map.setPanLimits([{ lat: 39.008, lon: -77.165 }, { lat: 38.782, lon: -76.874 }]);
+  
+//map.addLayer(mapbox.layer().id('examples.map-vyofok3q'));
+
+
+ map.addLayer(mapbox.layer().id(baseMap));
+ map.addLayer(mapbox.layer().id(layer, function(){
+
+  map.interaction.auto();
+  map.interaction.off('on');
+  map.interaction.off('off');
+  map.interaction.on({
+      on: function(table){
+      
+      
+          var d = table.data;
+  
+
+            var hoodName = d.NBH_NAMES,
+            population = d.AvgPopulat,
+            poverty = d.PctPoorPer,
+            unemployment = d.PctUnemplo,
+            income = d.AvgFamilyI,
+            home_owning = d.PctOwnerOc,
+
+            visits = d.SUMtot,
+            food = d.SUMf,
+            medical = d.SUMm,
+            legal = d.SUMlb,
+            social = d.SUMss + d.SUMint,
+            clothing = d.SUMc,
+
+            medi = d.SUMmedi,
+            dent = d.SUMdent,
+            ben = d.SUMbene,
+            mother = d.SUMnex + d.SUMeye + d.SUMnutri,
+            lab = d.SUMlab,
+            case_m = d.SUMcmgt,
+            pep = d.SUMpep,
+            rep = d.SUMrpp
+,            walkin = d.SUMwalk + d.SUMint,
+            law_fam = d.SUMfamlaw,
+            law_land = d.SUMl_t,
+            lother = d.SUMopa + d.SUMpb + d.SUMldisa,
+
+
+            clientpop = d.COUNT + d.SUMnkids,
+            clientinc = d.MEANincome * 12,
+            gro_dis = d.MEANgdur / 60;
+
+
+            breaddata = [{'label':'Food', 'value':food, 'color':'#16AA8D'},
+                        {'label':'Medical', 'value':medical, 'color':'#E4552F', 'detail':[
+                          {'label':'Medical'  , 'value': medi  , 'color':'#E4552F'  },
+                          {'label':'Dental'  , 'value': dent , 'color':'#e86c54'  },
+                          {'label':'Enrollment'  , 'value':ben  , 'color':'#f5a292'  },
+                          {'label':'Lab'  , 'value': lab , 'color':'#fbcec5'  },
+                          {'label':'Other', 'value':mother  , 'color':'#f7dad4'  }
+                        ]},
+                        {'label':'Social Services', 'value':social, 'color': '#3E749A', 'detail':[
+                          {'label':'Walk-In/Intake'  , 'value': walkin  , 'color':'#3E749A'  },
+                          {'label':'Case Management'  , 'value':case_m  , 'color':'#7183c0'  },
+                          {'label':'RepPayee'  , 'value': rep  , 'color':'#a9bbf5'  },
+                          {'label':'PEP'  , 'value': pep  , 'color':'#dfe4f7'  }
+                        ]},
+                        {'label':'Clothing', 'value': clothing, 'color': '#ebdd3a'},
+                        {'label':'Legal', 'value': legal, 'color': '#e65c00', 'detail': [
+                          {'label':'Family Law' , 'value': law_fam , 'color': '#f29b61' },
+                          {'label':'Landlord/Tenant' , 'value': law_land , 'color':'#e65c00'  },
+                          {'label':'Other'  , 'value': lother , 'color':'#f8ceb2'  }
+                        ]}
+                        ];
+
+
+          if(hoodName != currentHood){
+          
+            if(selected!=0) breaddata = breaddata[selected].detail;  
+            pieCharted(breaddata,selected);
+            
+            currentHood = hoodName;
+            $('#hood_title').text(currentHood);
+            $('td#gen_pop').text(addCommas(population));
+            $('td#client_pop').text(addCommas(clientpop));
+            $('td#gen_inc').text('$'+addCommas(income));
+            $('td#client_inc').text('$'+ addCommas(clientinc.toFixed(0)));
+            $('td#gen_dist').text('--');
+            $('td#client_dist').text(gro_dis.toFixed(0) + ' min'); 
+            
+
+          }
+
+
+
+      },
+      off: function(feature){
+        
+      }
+
+    });
+})); 
+
+
+</script>
+
+
+</body>

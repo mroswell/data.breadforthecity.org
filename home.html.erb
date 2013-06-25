@@ -1,0 +1,100 @@
+<body class="home">
+<div id='banner' >
+	<h1 class="title">BreadData</h1>
+	<h2>Visuals for Bread for the City's Data</h2></div>
+	<!--
+<div id='sub_banner'><div id='sub-sub_banner'></div></div>
+-->
+<div id='main'> 
+	<div id='sidebar'></div>
+	
+	<div id='content'>
+	
+
+		<div id='map_link' class='project'>
+		<p class="link_title">2012 Services Map</p>
+		<p class="description">See an interactive map of visit volumes to Bread by neighborhood.</p>
+		<a href='/map2012'>	<%= image_tag("map2012_thumb.png", :class => "link_img") %></a>
+
+	   </div>
+	   
+
+		
+		<div id='survey_link' class='project'>
+
+			<p class="link_title">April 2013 Satisfaction Survey</p>
+			<p class="description">Find out how clients rated Bread in the April 2013 client satisfaction survey. </p>
+			<a href="/satisfaction">
+			<%= image_tag("satisfiedApr2013_thumb.png", :class => "link_img" )%></a>
+			
+		</div>
+			
+	
+
+
+			<div id='foodorg_link' class='project'>
+
+			<p class="link_title">Food Referral Organizations</p>
+			<p class="description">Check out which food organizations require referrals in DC </p>
+			<a href="/food_organizations/">
+			<%= image_tag("foodorgs_thumb.png", :class => "link_img" ) %></a>
+	
+		</div>
+		</div>
+			
+	</div>
+
+
+
+
+	
+</div>
+
+<div id ='footer'> </div>
+
+
+<script>
+var btm;
+
+jQuery(document).ready(function($){
+
+var $banner = $('#sub_banner'),
+$content = $('#content'),
+$project = $('.project'),
+$description = $('.description'),
+//hei = $banner.height(),
+hei = 75;
+$content.css('padding-top', hei + 'px');
+
+var width = $content.width(),
+$images = $('.link_img'),
+numImgs = $images.length;
+
+
+$project.mouseenter(function(){
+
+	$(this).children('.description').show();
+	$(this).children('a').children('.link_img').css('opacity',0.5);
+
+
+}).mouseleave(function(){
+	$(this).children('.description').hide();
+	$(this).children('a').children('.link_img').css('opacity',1);
+	
+});
+
+
+
+});
+
+
+
+
+
+
+
+</script>
+
+
+
+</body>
